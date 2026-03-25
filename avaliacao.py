@@ -61,7 +61,7 @@ def secao_caixa(pdf, titulo, conteudo_dict):
     pdf.ln(4)
     pdf.ln(4)
 
-st.set_page_config(page_title="Avaliação fisioterapêutica", page_icon="🦴")
+st.set_page_config(page_title="Avaliação fisioterapêutica", page_icon="🦴", layout="centered")
 
 st.title("AVALIAÇÃO FISIOTERAPÊUTICA",text_alignment="center")
 st.markdown("<p style='text-align: center;'>Preencha todos os campos abaixo para gerar o PDF da avaliação.</p>", unsafe_allow_html=True)
@@ -71,9 +71,7 @@ with st.form(key='avaliacao', clear_on_submit=False):
     st.header("Anamnese", text_alignment="center")
 
     st.subheader("👤 Identificação Inicial")
-
     nome = st.text_input("Nome Completo", placeholder="Digite seu nome aqui...")
-    
     
     col1, col2 = st.columns([1, 2])
     with col1:
@@ -81,44 +79,30 @@ with st.form(key='avaliacao', clear_on_submit=False):
     with col2:
         ocupacao = st.text_input("Ocupação Profissional", placeholder="Ex: Engenheiro, Estudante...")
 
-    
     col3, col4 = st.columns(2)
     with col3:
         email = st.text_input("E-mail", placeholder="seu@email.com")
     with col4:
         telefone = st.text_input("Telefone/WhatsApp", placeholder="(00) 90000-0000")
-
     st.divider()
-
-    # st.subheader("📋 Questionário de Prontidão Física (PAR-Q)")
-    # st.caption("Responda 'Sim' ou 'Não' para as seguintes questões:")
-    # q1 = st.radio("1. O seu médico já lhe disse alguma vez que você apresenta um problema cardíaco?", ["Não", "Sim"], horizontal=True)
-    # q2 = st.radio("2. Você apresenta dores no peito com frequência?", ["Não", "Sim"], horizontal=True)
-    # q3 = st.radio("3. Você apresenta episódios frequentes de tontura ou sensação de desmaio?", ["Não", "Sim"], horizontal=True)
-    # q4 = st.radio("4. Seu médico alguma vez já lhe disse que sua pressão sanguínea era muito alta?", ["Não", "Sim"], horizontal=True)
-    # q5 = st.radio("5. Você apresenta um problema ósseo ou articular que possa ser agravado pelo exercício?", ["Não", "Sim"], horizontal=True)
-    # q6 = st.radio("6. Existe alguma outra razão física que o impeça de praticar atividade física?", ["Não", "Sim"], horizontal=True)
-    # q7 = st.radio("7. Você tem mais de 65 anos e não está acostumado a se exercitar vigorosamente?", ["Não", "Sim"], horizontal=True)
 
 
     st.subheader("🏋🏼 Prontidão para atividade física")
-
     questionario_parq = st.text_input("Questionário PAR-Q")
-    questionario_risco_doencas_coronarias = st.text_input("Questionário Risco para Doenças Coronarianas")
 
+    questionario_risco_doencas_coronarias = st.text_input("Questionário Risco para Doenças Coronarianas")
     st.divider()
 
     st.subheader("🎯 Objetivos")
-
     principal = st.text_area("Principal", height=100)
 
     secundarios = st.text_area("Secundários", height=150)
-
     st.divider()
 
+    st.subheader("📊 Nível esportivo")
     nivel_atividade_fisica = st.text_input("Nível atual de atividade física")
-    historico_esportivo = st.text_area("Histórico esportivo", height=150)
 
+    historico_esportivo = st.text_area("Histórico esportivo", height=150)
     st.divider()
 
     st.subheader("📆 Rotina")
@@ -129,6 +113,48 @@ with st.form(key='avaliacao', clear_on_submit=False):
     with col6:
         tempo_disponivel = st.text_input("Tempo disponível")
         turno = st.selectbox("Turno",["Manhã", "Tarde", "Noite"])
+    st.divider()
+
+
+    st.header("Controle de saúde", text_alignment="center")
+    queixas_atuais =st.text_area("Queixas atuais (história atual, mecanismo de lesão, exames, fatores atenuantes e agravantes,… )", height=150)
+
+    historia_pregressa = st.text_area("História pregressa (dores/lesões prévias, histórico de cirurgias,…)", height=150)
+
+    historico_saude = st.text_area("Histórico de saúde)", height=150)
+
+    medicamentos_uso = st.text_area("Medicamenros em uso", height=100)
+
+    st.subheader("🩺 Parâmetros de saúde")
+    nivel_hidratação = st.slider("Nível de hidratação (L) | 0-5", 0, 5)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        qualidade_sono = st.slider("Qualidade do sono | 0-10", 0, 10)
+        qualidade_alimentacao = st.slider("Qualidade da alimentação | 0-10", 0, 10)
+    with col2:
+        nivel_stress = st.slider("Nível de stress | 0-10", 0, 10)
+        nivel_disposicao = st.slider("Nível de disposição | 0-10", 0, 10)
+
+    
+    st.subheader("Postura de trabalho")
+    col1, col2, col3, col4, col5 = st.columns([1, 0.17, 0.17, 0.17, 1], gap=None)
+    with col2:
+        st.image("cadeira_full_branco.png", width="content")
+        
+
+    with col3:
+        st.image("pessoas_full_branco.png", width="content")
+
+
+    with col4:
+        st.image("andar_full_branco.png", width="content")
+    
+    col1, col2, col3 = st.columns([1.6,1.1,1.6])
+    with col2:
+        postura_de_trabalho = st.radio(" ", options=[1, 2, 3], horizontal=True, width="stretch", label_visibility="collapsed")
+
+
 
     # O botão de submit do formulário
     submitted = st.form_submit_button("Gerar Prévia")
