@@ -68,9 +68,12 @@ st.markdown("<p style='text-align: center;'>Preencha todos os campos abaixo para
 
 
 with st.form(key='avaliacao', clear_on_submit=False):
+
     st.header("Anamnese", text_alignment="center")
 
+
     st.subheader("👤 Identificação Inicial")
+
     nome = st.text_input("Nome Completo", placeholder="Digite seu nome aqui...")
     
     col1, col2 = st.columns([1, 2])
@@ -79,44 +82,62 @@ with st.form(key='avaliacao', clear_on_submit=False):
     with col2:
         ocupacao = st.text_input("Ocupação Profissional", placeholder="Ex: Engenheiro, Estudante...")
 
+
     col3, col4 = st.columns(2)
     with col3:
         email = st.text_input("E-mail", placeholder="seu@email.com")
     with col4:
         telefone = st.text_input("Telefone/WhatsApp", placeholder="(00) 90000-0000")
+
     st.divider()
 
 
     st.subheader("🏋🏼 Prontidão para atividade física")
+
     questionario_parq = st.text_input("Questionário PAR-Q")
 
     questionario_risco_doencas_coronarias = st.text_input("Questionário Risco para Doenças Coronarianas")
+
     st.divider()
 
+
     st.subheader("🎯 Objetivos")
+
     principal = st.text_area("Principal", height=100)
 
     secundarios = st.text_area("Secundários", height=150)
+
     st.divider()
 
+
     st.subheader("📊 Nível esportivo")
+
     nivel_atividade_fisica = st.text_input("Nível atual de atividade física")
 
     historico_esportivo = st.text_area("Histórico esportivo", height=150)
+
     st.divider()
 
+
     st.subheader("📆 Rotina")
+
     col5, col6 = st.columns(2)
     with col5:
         frequencia = st.number_input("Frequência semanal", min_value=0, max_value=7)
+
         dias = st.text_input("Dias")
     with col6:
         tempo_disponivel = st.text_input("Tempo disponível")
+
         turno = st.selectbox("Turno",["Manhã", "Tarde", "Noite"])
+
     st.divider()
 
 
+   
     st.header("Controle de saúde", text_alignment="center")
+   
+   
     queixas_atuais =st.text_area("Queixas atuais (história atual, mecanismo de lesão, exames, fatores atenuantes e agravantes,… )", height=150)
 
     historia_pregressa = st.text_area("História pregressa (dores/lesões prévias, histórico de cirurgias,…)", height=150)
@@ -126,27 +147,26 @@ with st.form(key='avaliacao', clear_on_submit=False):
     medicamentos_uso = st.text_area("Medicamenros em uso", height=100)
 
     st.subheader("🩺 Parâmetros de saúde")
+   
     nivel_hidratação = st.slider("Nível de hidratação (L) | 0-5", 0, 5)
 
     col1, col2 = st.columns(2)
     with col1:
         qualidade_sono = st.slider("Qualidade do sono | 0-10", 0, 10)
+        
         qualidade_alimentacao = st.slider("Qualidade da alimentação | 0-10", 0, 10)
     with col2:
         nivel_stress = st.slider("Nível de stress | 0-10", 0, 10)
+        
         nivel_disposicao = st.slider("Nível de disposição | 0-10", 0, 10)
 
-    
     st.subheader("Postura de trabalho")
+    
     col1, col2, col3, col4, col5 = st.columns([1, 0.17, 0.17, 0.17, 1], gap=None)
     with col2:
         st.image("cadeira_full_branco.png", width="content")
-        
-
     with col3:
         st.image("pessoas_full_branco.png", width="content")
-
-
     with col4:
         st.image("andar_full_branco.png", width="content")
     
@@ -154,13 +174,17 @@ with st.form(key='avaliacao', clear_on_submit=False):
     with col2:
         postura_de_trabalho = st.radio(" ", options=[1, 2, 3], horizontal=True, width="stretch", label_visibility="collapsed")
 
+    st.divider()
+
+    st.header("Composição corporal", text_alignment="center")
+
 
 
     # O botão de submit do formulário
     submitted = st.form_submit_button("Gerar Prévia")
 
 if submitted:
-    if not (nome and idade and ocupacao and email and telefone and questionario_parq and questionario_risco_doencas_coronarias and principal and secundarios and nivel_atividade_fisica and historico_esportivo and frequencia and dias and tempo_disponivel and turno):
+    if not (nome and idade and ocupacao and email and telefone and questionario_parq and questionario_risco_doencas_coronarias and principal and secundarios and nivel_atividade_fisica and historico_esportivo and frequencia and dias and tempo_disponivel and turno and queixas_atuais and historia_pregressa and historico_saude and medicamentos_uso and nivel_hidratação and qualidade_sono and nivel_stress and nivel_disposicao and postura_de_trabalho):
         st.warning("Preencha todos os campos")
     else:
         st.session_state["dados"] = {
@@ -178,7 +202,16 @@ if submitted:
             "Frequencia": frequencia,
             "Dias": dias,
             "Tempo disponivel": tempo_disponivel,
-            "Turno": turno
+            "Turno": turno,
+            "Queixas atuais": queixas_atuais,
+            "História pregressa": historia_pregressa,
+            "Histórico de saúde": historico_saude,
+            "Medicamentos em uso": medicamentos_uso,
+            "Nível de hidratação": nivel_hidratação,
+            "Qualidade do sono": qualidade_sono,
+            "Nível de stress": nivel_stress,
+            "Nível de disposição": nivel_disposicao,
+            "Postura de Trabalho": postura_de_trabalho
         }
 
         pdf = FPDF()
